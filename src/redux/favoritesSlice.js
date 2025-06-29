@@ -1,14 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  favoriterecipes: [], // Updated to handle favorite articles
-};
+// redux/favoritesSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
 const favoritesSlice = createSlice({
-  name: "favorites",
-  initialState,
+  name: 'favorites',
+  initialState: {
+    favoriterecipes: [],
+  },
   reducers: {
-   
+    toggleFavorite: (state, action) => {
+      const recipe = action.payload;
+      const exists = state.favoriterecipes.some(
+        (item) => item.idFood === recipe.idFood
+      );
+      if (exists) {
+        state.favoriterecipes = state.favoriterecipes.filter(
+          (item) => item.idFood !== recipe.idFood
+        );
+      } else {
+        state.favoriterecipes.push(recipe);
+      }
+    },
   },
 });
 
